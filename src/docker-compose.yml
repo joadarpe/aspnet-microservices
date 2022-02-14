@@ -25,7 +25,18 @@ services:
       context: .
       dockerfile: services/basket/Basket.API/Dockerfile
 
+# Discount.API Services
+  discount.db:
+    image: postgres
+
+  discount.api:
+    image: ${DOCKER_REGISTRY-}discount.api
+    build:
+      context: .
+      dockerfile: services/discount/Discount.API/Dockerfile
+
 volumes:
   portainer_data:
   mongo_data:
   redis_data:
+  postgres_data:
