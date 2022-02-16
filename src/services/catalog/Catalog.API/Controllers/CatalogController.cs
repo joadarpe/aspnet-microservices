@@ -1,7 +1,11 @@
-﻿using Catalog.API.Entities;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
+using Catalog.API.Entities;
 using Catalog.API.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace Catalog.API.Controllers
 {

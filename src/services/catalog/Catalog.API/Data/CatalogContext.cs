@@ -1,4 +1,5 @@
 ﻿using Catalog.API.Entities;
+using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
 namespace Catalog.API.Data
