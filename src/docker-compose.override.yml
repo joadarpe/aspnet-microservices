@@ -85,3 +85,22 @@ services:
     ports:
       - "8004:80"
 
+# Ordering.API Services
+  ordering.db:
+    container_name: ordering.db
+    environment:
+      - SA_PASSWORD=JaaP12345678
+      - ACCEPT_EULA=Y
+    restart: always
+    ports:
+      - "1433:1433"
+
+  ordering.api:
+    container_name: ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:OrderingConnectionString=Server=ordering.db;Database=OrderDb;User Id=sa;Password=JaaP12345678;
+    depends_on:
+      - ordering.db
+    ports:
+      - "8005:80"
