@@ -6,18 +6,29 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Controllers\" />
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
     <None Remove="Extensions\" />
+    <None Remove="MassTransit.AspNetCore" />
+    <None Remove="MassTransit.RabbitMQ" />
+    <None Remove="EventBusConsumer\" />
+    <None Remove="Mappings\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Extensions\" />
+    <Folder Include="EventBusConsumer\" />
+    <Folder Include="Mappings\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ordering.Infrastructure\Ordering.Infrastructure.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\building-blocks\EventBus.Messages\EventBus.Messages.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
+    <DockerComposeProjectPath>../../../docker-compose.dcproj</DockerComposeProjectPath>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
@@ -13,11 +13,16 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Grpc.AspNetCore" />
-    <None Remove="GrpcServices\" />
+    <None Remove="MassTransit.AspNetCore" />
+    <None Remove="MassTransit.RabbitMQ" />
+    <None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
   </ItemGroup>
   <ItemGroup>
     <Protobuf Include="..\..\discount\Discount.gRPC\Protos\discount.proto" GrpcServices="Client">
@@ -26,5 +31,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="GrpcServices\" />
+    <Folder Include="Mappings\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\building-blocks\EventBus.Messages\EventBus.Messages.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

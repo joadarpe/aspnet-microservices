@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-# Portainer
+  # Portainer
   portainer:
     container_name: portainer
     restart: always
@@ -12,7 +12,17 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
 
-# Catalog.API Services
+  # Message broker
+  rabbitmq:
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+
+  # Catalog.API Services
   catalog.db:
     container_name: catalog.db
     restart: always
@@ -31,7 +41,7 @@ services:
     ports:
       - "8001:80"
 
-# Basket.API Services
+  # Basket.API Services
   basket.db:
     container_name: basket.db
     restart: always
@@ -46,13 +56,15 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - CacheSettings:ConnectionString=basket.db:6379
       - GrpcSettings:DiscountUrl=http://discount.grpc
+      - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
     depends_on:
       - basket.db
       - discount.grpc
+      - rabbitmq
     ports:
       - "8002:80"
 
-# Discount.API Services
+  # Discount.API Services
   discount.db:
     container_name: discount.db
     environment:
@@ -85,7 +97,7 @@ services:
     ports:
       - "8004:80"
 
-# Ordering.API Services
+  # Ordering.API Services
   ordering.db:
     container_name: ordering.db
     environment:
@@ -100,7 +112,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:OrderingConnectionString=Server=ordering.db;Database=OrderDb;User Id=sa;Password=JaaP12345678;
+      - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
     depends_on:
       - ordering.db
+      - rabbitmq
     ports:
       - "8005:80"

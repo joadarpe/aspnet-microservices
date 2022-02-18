@@ -1,11 +1,15 @@
 version: '3.4'
 
 services:
-# Portainer
+  # Portainer
   portainer:
     image: portainer/portainer-ce
 
-# Catalog.API Services
+  # Message broker
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+  # Catalog.API Services
   catalog.db:
     image: mongo
 
@@ -15,7 +19,7 @@ services:
       context: .
       dockerfile: services/catalog/Catalog.API/Dockerfile
 
-# Basket.API Services
+  # Basket.API Services
   basket.db:
     image: redis:alpine
 
@@ -25,7 +29,7 @@ services:
       context: .
       dockerfile: services/basket/Basket.API/Dockerfile
 
-# Discount.API Services
+  # Discount.API Services
   discount.db:
     image: postgres
 
@@ -41,7 +45,7 @@ services:
       context: .
       dockerfile: services/discount/Discount.gRPC/Dockerfile
 
-# Ordering.API Services
+  # Ordering.API Services
   ordering.db:
     image: mcr.microsoft.com/mssql/server:2017-latest
 
@@ -56,4 +60,4 @@ volumes:
   mongo_data:
   redis_data:
   postgres_data:
-
+  rabbitmq_data:
