@@ -118,3 +118,17 @@ services:
       - rabbitmq
     ports:
       - "8005:80"
+
+  # Ocelot.ApiGw
+  ocelot.apigw:
+    container_name: ocelot.apigw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "80:80"
+

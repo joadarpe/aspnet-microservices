@@ -55,9 +55,17 @@ services:
       context: .
       dockerfile: services/ordering/Ordering.API/Dockerfile
 
+  # Ocelot.ApiGw
+  ocelot.apigw:
+    image: ${DOCKER_REGISTRY-}ocelot.apigw
+    build:
+      context: .
+      dockerfile: api-gateways/Ocelot.ApiGw/Dockerfile
+
 volumes:
   portainer_data:
   mongo_data:
   redis_data:
   postgres_data:
   rabbitmq_data:
+
