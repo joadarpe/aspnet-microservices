@@ -38,7 +38,7 @@
                 <div class="card-body">
                     <p class="price">@Model.Product.Price $</p>
                     <p class="price_discounted">@(Model.Product.Price + 120) $</p>
-                    <form asp-page-handler="AddToCart" method="post" name="addToCartForm" id="add_cart_form">
+                    <form asp-page="Cart" asp-page-handler="AddToCart" method="post" name="addToCartForm" id="add_cart_form">
                         <div class="form-group">
                             <label for="colors">Color</label>
                             <select asp-for="Color" class="custom-select" id="colors">

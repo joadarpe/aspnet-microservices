@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AspnetRunBasics</title>
+    <title>@ViewData["Title"] - Shopping cart</title>
 
     <!-- CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -17,7 +17,7 @@
 
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">AspnetRunBasics</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Shopping cart</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -29,7 +29,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Product">Product</a>
-                        </li>                        
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Cart">Cart</a>
                         </li>
@@ -39,6 +39,12 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Contact">Contact</a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/Logout">Logout</a>
+                            </li>
+                        }
                     </ul>
 
                     <form class="form-inline my-2 my-lg-0">

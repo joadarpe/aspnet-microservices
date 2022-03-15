@@ -12,12 +12,10 @@ namespace AspnetRunBasics
     public class ProductModel : PageModel
     {
         private readonly ICatalogService _catalogService;
-        private readonly IBasketService _basketService;
 
-        public ProductModel(ICatalogService catalogService, IBasketService basketService)
+        public ProductModel(ICatalogService catalogService)
         {
             _catalogService = catalogService ?? throw new ArgumentNullException(nameof(catalogService));
-            _basketService = basketService ?? throw new ArgumentNullException(nameof(basketService));
         }
 
         public IEnumerable<string> CategoryList { get; set; } = new List<string>();
@@ -43,32 +41,6 @@ namespace AspnetRunBasics
             }
 
             return Page();
-        }
-
-        public async Task<IActionResult> OnPostAddToCartAsync(string productId)
-        {
-            var product = await _catalogService.GetCatalog(productId);
-
-            var userName = "JonathanA";
-            var basket = await _basketService.GetBasket(userName);
-
-            var item = basket.Items.SingleOrDefault(x => x.ProductId == productId && x.Color == "Black");
-
-            if (item != null)
-                item.Quantity += 1;
-            else
-                basket.Items.Add(new BasketItemModel
-                {
-                    ProductId = productId,
-                    ProductName = product.Name,
-                    Price = product.Price,
-                    Quantity = 1,
-                    Color = "Black"
-                });
-
-            var basketUpdated = await _basketService.UpdateBasket(basket);
-
-            return RedirectToPage("Cart");
         }
     }
 }

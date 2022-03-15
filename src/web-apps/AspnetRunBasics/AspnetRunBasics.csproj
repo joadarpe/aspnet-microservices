@@ -14,10 +14,14 @@
     <None Remove="Models\" />
     <None Remove="Services\" />
     <None Remove="Extensions\" />
+    <None Remove="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="Services\" />
     <Folder Include="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.3" />
   </ItemGroup>
 </Project>
