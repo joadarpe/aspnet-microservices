@@ -35,12 +35,26 @@ namespace IdentityServer
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile
                     }
+                },
+                new Client
+                {
+                    ClientId = "api.client",
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientSecrets =
+                    {
+                        new Secret("api.secret".Sha256())
+                    },
+                    AllowedScopes =
+                    {
+                        "api.scope"
+                    }
                 }
             };
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
+                new ApiScope("api.scope")
             };
 
         public static IEnumerable<ApiResource> ApiResources =>

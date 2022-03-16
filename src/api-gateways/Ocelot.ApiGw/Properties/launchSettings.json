@@ -11,7 +11,7 @@
     "Ocelot.ApiGw": {
       "commandName": "Project",
       "dotnetRunMessages": true,
-      "launchBrowser": true,
+      "launchBrowser": false,
       "applicationUrl": "http://localhost:5060",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Local"
