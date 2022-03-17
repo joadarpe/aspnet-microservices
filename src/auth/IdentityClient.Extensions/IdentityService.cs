@@ -3,9 +3,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 
-namespace AspnetRunBasics.Services
+namespace IdentityClient.Extensions
 {
-	public class IdentityService : IIdentityService
+    public interface IIdentityService
+    {
+        Task<TokenResponse> RequestClientCredentialsTokenAsync();
+    }
+
+    public class IdentityService : IIdentityService
 	{
         private readonly HttpClient _client;
         private readonly ClientCredentialsTokenRequest _tokenRequest;

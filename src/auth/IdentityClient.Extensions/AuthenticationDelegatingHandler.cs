@@ -2,10 +2,9 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AspnetRunBasics.Services;
 using IdentityModel.Client;
 
-namespace AspnetRunBasics.HttpHandlers
+namespace IdentityClient.Extensions
 {
     public class AuthenticationDelegatingHandler : DelegatingHandler
 	{

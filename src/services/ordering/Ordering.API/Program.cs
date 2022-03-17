@@ -1,4 +1,5 @@
 ﻿using EventBus.Messages.Common;
+using IdentityClient.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -39,6 +40,8 @@ builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.AddApiAuthentication();
+
 var app = builder.Build();
 
 app.MigrateDatabase<OrderContext>((context, services) =>
@@ -53,6 +56,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

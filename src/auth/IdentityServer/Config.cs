@@ -1,16 +1,22 @@
-﻿using IdentityModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Security.Claims;
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
-using System.Collections.Generic;
-using System.Security.Claims;
+using Microsoft.Extensions.Configuration;
 
 namespace IdentityServer
 {
     public class Config
     {
-        public static IEnumerable<Client> Clients =>
-            new Client[]
+        public static IEnumerable<Client> BuildClients(IConfiguration config)
+        {
+            var webAppClientURL = config.GetConnectionString("WebAppClient")
+                ?? throw new ArgumentNullException("Required ConnectionStrings:WebAppClient");
+
+            return new Client[]
             {
                 new Client
                 {
@@ -20,11 +26,11 @@ namespace IdentityServer
                     AllowRememberConsent = false,
                     RedirectUris =
                     {
-                        "https://localhost:5070/signin-oidc"
+                        $"{webAppClientURL}/signin-oidc",
                     },
                     PostLogoutRedirectUris =
                     {
-                        "https://localhost:5070/signout-callback-oidc"
+                        $"{webAppClientURL}/signout-callback-oidc",
                     },
                     ClientSecrets =
                     {
@@ -50,6 +56,7 @@ namespace IdentityServer
                     }
                 }
             };
+        }
 
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]

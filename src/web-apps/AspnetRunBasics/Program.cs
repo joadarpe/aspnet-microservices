@@ -1,8 +1,7 @@
 using System;
 using System.Security.Claims;
-using AspnetRunBasics.HttpHandlers;
 using AspnetRunBasics.Services;
-using IdentityModel.Client;
+using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -34,27 +33,19 @@ builder.Services.AddAuthentication(options =>
     options.GetClaimsFromUserInfoEndpoint = true;
 });
 
+builder.AddApiClientAuthentication();
+
 // Add services to the container.
-builder.Services.AddTransient<AuthenticationDelegatingHandler>();
 builder.Services.AddHttpClient<ICatalogService, CatalogService>(c =>
     c.BaseAddress = new Uri(builder.Configuration.GetConnectionString("GatewayAddress"))
-).AddHttpMessageHandler<AuthenticationDelegatingHandler>();
+).AddAuthenticationDelegatingHandler();
 builder.Services.AddHttpClient<IBasketService, BasketService>(c =>
     c.BaseAddress = new Uri(builder.Configuration.GetConnectionString("GatewayAddress"))
-).AddHttpMessageHandler<AuthenticationDelegatingHandler>();
+).AddAuthenticationDelegatingHandler();
 builder.Services.AddHttpClient<IOrderService, OrderService>(c =>
     c.BaseAddress = new Uri(builder.Configuration.GetConnectionString("GatewayAddress"))
-).AddHttpMessageHandler<AuthenticationDelegatingHandler>();
-// Identity server service
-builder.Services.AddSingleton(new ClientCredentialsTokenRequest()
-{
-    Address = "connect/token",
-    ClientId = "api.client",
-    ClientSecret = "api.secret",
-    Scope = "api.scope"
-});
-builder.Services.AddHttpClient<IIdentityService, IdentityService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration.GetConnectionString("IdentityAuthority")));
+).AddAuthenticationDelegatingHandler();
+
 
 builder.Services.AddRazorPages();
 
