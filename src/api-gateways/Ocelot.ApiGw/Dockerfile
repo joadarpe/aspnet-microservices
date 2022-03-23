@@ -8,6 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["api-gateways/Ocelot.ApiGw/Ocelot.ApiGw.csproj", "api-gateways/Ocelot.ApiGw/"]
 COPY ["auth/IdentityClient.Extensions/IdentityClient.Extensions.csproj", "auth/IdentityClient.Extensions/"]
+COPY ["building-blocks/Common.Logging/Common.Logging.csproj", "building-blocks/Common.Logging/"]
 RUN dotnet restore "api-gateways/Ocelot.ApiGw/Ocelot.ApiGw.csproj"
 COPY . .
 WORKDIR "/src/api-gateways/Ocelot.ApiGw"

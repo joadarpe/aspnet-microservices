@@ -1,4 +1,5 @@
-﻿using Discount.gRPC.Extensions;
+﻿using Common.Logging;
+using Discount.gRPC.Extensions;
 using Discount.gRPC.Repositories;
 using Discount.gRPC.Services;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IDiscountRepository, DiscountRepository>();
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddGrpc();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 app.MigrateDatabase<Program>();

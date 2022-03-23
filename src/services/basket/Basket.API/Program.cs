@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using MassTransit;
 using IdentityClient.Extensions;
+using Common.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +45,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.AddApiAuthentication();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 

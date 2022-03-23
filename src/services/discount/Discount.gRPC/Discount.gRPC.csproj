@@ -34,4 +34,9 @@
     <Protobuf Include="Protos\discount.proto" GrpcServices="Server">
     </Protobuf>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\building-blocks\Common.Logging\Common.Logging.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

@@ -24,5 +24,8 @@
     <ProjectReference Include="..\..\..\auth\IdentityClient.Extensions\IdentityClient.Extensions.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\building-blocks\Common.Logging\Common.Logging.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>

@@ -1,4 +1,5 @@
-﻿using EventBus.Messages.Common;
+﻿using Common.Logging;
+using EventBus.Messages.Common;
 using IdentityClient.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
@@ -41,6 +42,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.AddApiAuthentication();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 

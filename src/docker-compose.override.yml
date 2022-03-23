@@ -38,6 +38,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:IdentityAuthority=http://identityserver
       - DatabaseSettings:ConnectionString=mongodb://catalog.db:27017
+      - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - catalog.db
     ports:
@@ -60,6 +61,7 @@ services:
       - CacheSettings:ConnectionString=basket.db:6379
       - GrpcSettings:DiscountUrl=http://discount.grpc
       - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
+      - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - basket.db
       - discount.grpc
@@ -86,6 +88,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:IdentityAuthority=http://identityserver
       - DatabaseSettings:ConnectionString=Server=discount.db;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;
+      - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - discount.db
     ports:
@@ -96,6 +99,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - DatabaseSettings:ConnectionString=Server=discount.db;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;
+      - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - discount.db
     ports:
@@ -118,6 +122,7 @@ services:
       - ConnectionStrings:IdentityAuthority=http://identityserver
       - ConnectionStrings:OrderingConnectionString=Server=ordering.db;Database=OrderDb;User Id=sa;Password=JaaP12345678;
       - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
+      - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - ordering.db
       - rabbitmq
@@ -130,6 +135,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:IdentityAuthority=http://identityserver
+      - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - catalog.api
       - basket.api
@@ -146,6 +152,7 @@ services:
       - ApiSettings:CatalogUrl=http://catalog.api
       - ApiSettings:BasketUrl=http://basket.api
       - ApiSettings:OrderingUrl=http://ordering.api
+      - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - catalog.api
       - basket.api
@@ -211,3 +218,10 @@ services:
         - elasticsearch
     ports:
         - "5601:5601"  
+
+  aspnetrunbasics:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "80"
+

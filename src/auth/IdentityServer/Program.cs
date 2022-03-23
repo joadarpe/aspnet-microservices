@@ -1,4 +1,5 @@
-﻿using IdentityServer;
+﻿using Common.Logging;
+using IdentityServer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,6 +14,8 @@ builder.Services.AddIdentityServer()
     .AddInMemoryApiResources(Config.ApiResources)
     .AddTestUsers(Config.TestUsers)
     .AddDeveloperSigningCredential();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 

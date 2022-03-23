@@ -16,9 +16,6 @@
     <None Remove="Extensions\" />
     <None Remove="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
     <None Remove="IdentityModel" />
-    <None Remove="Serilog.AspNetCore" />
-    <None Remove="Serilog.Enrichers.Environment" />
-    <None Remove="Serilog.Sinks.Elasticsearch" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -27,12 +24,12 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.3" />
-    <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
-    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
-    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\auth\IdentityClient.Extensions\IdentityClient.Extensions.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\..\building-blocks\Common.Logging\Common.Logging.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

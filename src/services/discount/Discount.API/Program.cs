@@ -1,3 +1,4 @@
+using Common.Logging;
 using Discount.API.Extensions;
 using Discount.API.Repositories;
 using IdentityClient.Extensions;
@@ -15,6 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.AddApiAuthentication();
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 app.MigrateDatabase<Program>();

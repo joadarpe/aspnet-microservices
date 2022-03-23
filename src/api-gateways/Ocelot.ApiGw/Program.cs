@@ -1,4 +1,5 @@
-﻿using IdentityClient.Extensions;
+﻿using Common.Logging;
+using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -20,6 +21,8 @@ builder.Services.AddOcelot().AddCacheManager(cb =>
 {
     cb.WithDictionaryHandle();
 });
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
