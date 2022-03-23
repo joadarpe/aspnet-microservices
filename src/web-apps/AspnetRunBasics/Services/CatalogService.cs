@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using AspnetRunBasics.Extensions;
 using AspnetRunBasics.Models;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace AspnetRunBasics.Services
@@ -13,18 +12,15 @@ namespace AspnetRunBasics.Services
     {
         private readonly HttpClient _client;
         private readonly ILogger<CatalogService> _logger;
-        private readonly IConfiguration _configuration;
 
-        public CatalogService(HttpClient client, ILogger<CatalogService> logger, IConfiguration configuration)
+        public CatalogService(HttpClient client, ILogger<CatalogService> logger)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
         }
 
         public async Task<IEnumerable<CatalogModel>> GetCatalog()
         {
-            _logger.LogError($"Configuration found: {_configuration.GetConnectionString("IdentityAuthority")}");
             var response = await _client.GetAsync("/Catalog");
             return await response.ReadContentAs<List<CatalogModel>>();
         }
