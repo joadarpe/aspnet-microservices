@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 using System.Security.Claims;
 using AspnetRunBasics.Services;
 using IdentityClient.Extensions;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Serilog.Sinks.Elasticsearch;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +52,25 @@ builder.Services.AddHttpClient<IOrderService, OrderService>(c =>
 
 
 builder.Services.AddRazorPages();
+builder.Host.UseSerilog((context, config) =>
+{
+    var elasticUri = context.Configuration.GetConnectionString("ElasticSearchUri")
+        ?? throw new ArgumentNullException("Required a valid ConnectionStrings:ElasticSearchUri");
+
+    config.Enrich.FromLogContext()
+        .Enrich.WithMachineName()
+        .WriteTo.Console()
+        .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(elasticUri))
+        {
+            IndexFormat = $"applogs-{context.HostingEnvironment.ApplicationName?.ToLower().Replace(".", "-")}-{context.HostingEnvironment.EnvironmentName?.ToLower().Replace(".", "-")}-{DateTime.UtcNow:yyyy-MM}",
+            AutoRegisterTemplate = true,
+            NumberOfShards = 2,
+            NumberOfReplicas = 1
+        })
+        .Enrich.WithEnvironmentName()
+        .Enrich.WithEnvironmentUserName()
+        .ReadFrom.Configuration(context.Configuration);
+});
 
 var app = builder.Build();
 

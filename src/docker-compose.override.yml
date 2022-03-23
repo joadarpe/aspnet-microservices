@@ -166,6 +166,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:IdentityAuthority=http://identityserver
       - ConnectionStrings:GatewayAddress=http://ocelot.apigw
+      - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
       - ASPNETCORE_URLS=https://+:443
       - ASPNETCORE_Kestrel__Certificates__Default__Password=joadarpe
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/shopping.webapp.pfx
