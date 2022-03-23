@@ -31,6 +31,7 @@ builder.Services.AddAuthentication(options =>
     options.SaveTokens = true;
 
     options.GetClaimsFromUserInfoEndpoint = true;
+    options.RequireHttpsMetadata = false;
 });
 
 builder.AddApiClientAuthentication();

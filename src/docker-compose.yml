@@ -69,12 +69,19 @@ services:
       context: .
       dockerfile: api-gateways/Shopping.Aggregator/Dockerfile
 
-  # shopping.webapp
+  # Shopping.webapp
   shopping.webapp:
     image: ${DOCKER_REGISTRY-}shopping.webapp
     build:
       context: .
       dockerfile: web-apps/AspnetRunBasics/Dockerfile
+
+  # IdentityServer
+  identityserver:
+    image: ${DOCKER_REGISTRY-}identityserver
+    build:
+      context: .
+      dockerfile: auth/IdentityServer/Dockerfile
 
 volumes:
   portainer_data:

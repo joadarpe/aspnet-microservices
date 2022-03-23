@@ -7,6 +7,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["api-gateways/Ocelot.ApiGw/Ocelot.ApiGw.csproj", "api-gateways/Ocelot.ApiGw/"]
+COPY ["auth/IdentityClient.Extensions/IdentityClient.Extensions.csproj", "auth/IdentityClient.Extensions/"]
 RUN dotnet restore "api-gateways/Ocelot.ApiGw/Ocelot.ApiGw.csproj"
 COPY . .
 WORKDIR "/src/api-gateways/Ocelot.ApiGw"

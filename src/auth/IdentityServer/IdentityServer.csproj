@@ -2,11 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <DockerComposeProjectPath>../../docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>032dae8a-04b1-4b77-bc21-cadc798f4004</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <None Remove="IdentityServer4" />
-    <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="4.1.2" />

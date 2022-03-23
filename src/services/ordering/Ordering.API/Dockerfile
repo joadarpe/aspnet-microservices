@@ -11,6 +11,7 @@ COPY ["services/ordering/Ordering.Infrastructure/Ordering.Infrastructure.csproj"
 COPY ["services/ordering/Ordering.Application/Ordering.Application.csproj", "services/ordering/Ordering.Application/"]
 COPY ["services/ordering/Ordering.Domain/Ordering.Domain.csproj", "services/ordering/Ordering.Domain/"]
 COPY ["building-blocks/EventBus.Messages/EventBus.Messages.csproj", "building-blocks/EventBus.Messages/"]
+COPY ["auth/IdentityClient.Extensions/IdentityClient.Extensions.csproj", "auth/IdentityClient.Extensions/"]
 RUN dotnet restore "services/ordering/Ordering.API/Ordering.API.csproj"
 COPY . .
 WORKDIR "/src/services/ordering/Ordering.API"

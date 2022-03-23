@@ -1,5 +1,6 @@
 ﻿using System;
 using IdentityModel.Client;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,7 +10,6 @@ namespace IdentityClient.Extensions
 {
     public static class ServicesExtensions
 	{
-        private const string BEARER_AUTHORITY = "Bearer";
         private const string IDENTITY_API_KEY_AUTHORITY = "IdentityApiKey";
 
         private const string IDENTITY_AUTHORITY_CONFIG = "IdentityAuthority";
@@ -28,14 +28,15 @@ namespace IdentityClient.Extensions
             var identityAuthority = builder.Configuration.GetConnectionString(IDENTITY_AUTHORITY_CONFIG)
                 ?? throw new ArgumentNullException(NO_IDENTITY_AUTHORITY_CONFIG_MESSAGE);
 
-            builder.Services.AddAuthentication(BEARER_AUTHORITY)
-                .AddJwtBearer(BEARER_AUTHORITY, options =>
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
                 {
                     options.Authority = identityAuthority;
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false
                     };
+                    options.RequireHttpsMetadata = false;
                 });
         }
 
@@ -58,6 +59,7 @@ namespace IdentityClient.Extensions
                 {
                     ValidateAudience = false
                 };
+                options.RequireHttpsMetadata = false;
             });
         }
 

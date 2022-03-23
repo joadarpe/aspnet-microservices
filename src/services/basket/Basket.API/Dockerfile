@@ -8,6 +8,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["services/basket/Basket.API/Basket.API.csproj", "services/basket/Basket.API/"]
 COPY ["building-blocks/EventBus.Messages/EventBus.Messages.csproj", "building-blocks/EventBus.Messages/"]
+COPY ["auth/IdentityClient.Extensions/IdentityClient.Extensions.csproj", "auth/IdentityClient.Extensions/"]
 RUN dotnet restore "services/basket/Basket.API/Basket.API.csproj"
 COPY . .
 WORKDIR "/src/services/basket/Basket.API"

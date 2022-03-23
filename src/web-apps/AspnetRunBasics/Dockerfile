@@ -2,11 +2,12 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
-EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["web-apps/AspnetRunBasics/AspnetRunBasics.csproj", "web-apps/AspnetRunBasics/"]
+COPY ["auth/IdentityClient.Extensions/IdentityClient.Extensions.csproj", "auth/IdentityClient.Extensions/"]
 RUN dotnet restore "web-apps/AspnetRunBasics/AspnetRunBasics.csproj"
 COPY . .
 WORKDIR "/src/web-apps/AspnetRunBasics"

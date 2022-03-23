@@ -30,11 +30,13 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+      - mongo_data:/data/configdb
 
   catalog.api:
     container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:IdentityAuthority=http://identityserver
       - DatabaseSettings:ConnectionString=mongodb://catalog.db:27017
     depends_on:
       - catalog.db
@@ -54,6 +56,7 @@ services:
     container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:IdentityAuthority=http://identityserver
       - CacheSettings:ConnectionString=basket.db:6379
       - GrpcSettings:DiscountUrl=http://discount.grpc
       - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
@@ -81,6 +84,7 @@ services:
     container_name: discount.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:IdentityAuthority=http://identityserver
       - DatabaseSettings:ConnectionString=Server=discount.db;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;
     depends_on:
       - discount.db
@@ -111,6 +115,7 @@ services:
     container_name: ordering.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:IdentityAuthority=http://identityserver
       - ConnectionStrings:OrderingConnectionString=Server=ordering.db;Database=OrderDb;User Id=sa;Password=JaaP12345678;
       - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
     depends_on:
@@ -124,6 +129,7 @@ services:
     container_name: ocelot.apigw
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:IdentityAuthority=http://identityserver
     depends_on:
       - catalog.api
       - basket.api
@@ -147,18 +153,38 @@ services:
     ports:
       - "8006:80"
 
-  # shopping.webapp
+  # Shopping.webapp
   shopping.webapp:
     container_name: shopping.webapp
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ApiSettings:GatewayAddress=http://ocelot.apigw
     depends_on:
       - ocelot.apigw
       - catalog.api
       - basket.api
       - discount.api
       - ordering.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:IdentityAuthority=http://identityserver
+      - ConnectionStrings:GatewayAddress=http://ocelot.apigw
+      - ASPNETCORE_URLS=https://+:443
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=joadarpe
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/shopping.webapp.pfx
     ports:
-      - "8080:80"
+      - "8181:443"
+    volumes:
+      - ~/.aspnet/https:/https:ro
 
+  # IdentityServer
+  identityserver:
+    container_name: identityserver
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:WebAppClient=https://shopping.webapp
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=joadarpe
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/identityserver.pfx
+    ports:
+      - "1080:80"
+      - "1443:443"
+    volumes:
+      - ~/.aspnet/https:/https:ro
