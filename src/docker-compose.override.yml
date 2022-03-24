@@ -217,11 +217,4 @@ services:
     depends_on:
         - elasticsearch
     ports:
-        - "5601:5601"  
-
-  aspnetrunbasics:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "80"
-
+        - "5601:5601"
