@@ -36,18 +36,24 @@ builder.Services.AddAuthentication(options =>
 });
 
 builder.AddApiClientAuthentication();
+builder.AddTransientLoggingDelegatingHandler();
 
 // Add services to the container.
 builder.Services.AddHttpClient<ICatalogService, CatalogService>(c =>
     c.BaseAddress = new Uri(builder.Configuration.GetConnectionString("GatewayAddress"))
-).AddAuthenticationDelegatingHandler();
+)
+.AddAuthenticationDelegatingHandler()
+.AddLoggingDelegatingHandler();
 builder.Services.AddHttpClient<IBasketService, BasketService>(c =>
     c.BaseAddress = new Uri(builder.Configuration.GetConnectionString("GatewayAddress"))
-).AddAuthenticationDelegatingHandler();
+)
+.AddAuthenticationDelegatingHandler()
+.AddLoggingDelegatingHandler();
 builder.Services.AddHttpClient<IOrderService, OrderService>(c =>
     c.BaseAddress = new Uri(builder.Configuration.GetConnectionString("GatewayAddress"))
-).AddAuthenticationDelegatingHandler();
-
+)
+.AddAuthenticationDelegatingHandler()
+.AddLoggingDelegatingHandler();
 
 builder.Services.AddRazorPages();
 
