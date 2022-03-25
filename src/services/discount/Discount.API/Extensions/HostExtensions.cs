@@ -1,42 +1,50 @@
-﻿using System.Threading;
+﻿using System;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Npgsql;
+using Polly;
 
 namespace Discount.API.Extensions
 {
     public static class HostExtensions
     {
-        public static IHost MigrateDatabase<TContext>(this IHost host, int? retry = 0)
+        public static IHost MigrateDatabase<TContext>(this IHost host)
         {
-            int retryForAvailability = retry.Value;
-
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
                 var configuration = services.GetRequiredService<IConfiguration>();
                 var logger = services.GetRequiredService<ILogger<TContext>>();
 
+                var config = configuration?.GetSection("WaitAndRetry");
+                var maxAttemps = config?.GetValue<int?>("RetryCount") ?? 5;
+                var exponentialMultiplier = config?.GetValue<int?>("ExponentialBackoffMultiplier") ?? 2;
+
                 try
                 {
                     logger.LogInformation("Migrating postresql database.");
 
-                    ExecuteMigrations(configuration);
+                    var retry = Policy.Handle<NpgsqlException>()
+                        .WaitAndRetry(
+                            retryCount: maxAttemps,
+                            sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(exponentialMultiplier, retryAttempt)),
+                            onRetry: (exception, retryCount, context) =>
+                            {
+                                logger.LogError($"Retry {retryCount} of {context.PolicyKey} at {context.OperationKey}, due to: {exception}.");
+                            });
+
+                    // If the sql server container is not created on run docker compose
+                    // this migration can't fail for network related exception.
+                    // The retry options for DbContext only apply to transient exceptions
+                    retry.Execute(() => ExecuteMigrations(configuration));
 
                     logger.LogInformation("Migrated postresql database.");
                 }
                 catch (NpgsqlException ex)
                 {
                     logger.LogError(ex, "An error occurred while migrating the postresql database");
-
-                    if (retryForAvailability < 50)
-                    {
-                        retryForAvailability++;
-                        Thread.Sleep(200);
-                        MigrateDatabase<TContext>(host, retryForAvailability);
-                    }
                 }
             }
 
@@ -57,9 +65,9 @@ namespace Discount.API.Extensions
             command.ExecuteNonQuery();
 
             command.CommandText = @"CREATE TABLE Coupon(Id SERIAL PRIMARY KEY, 
-                                                                ProductName VARCHAR(24) NOT NULL,
-                                                                Description TEXT,
-                                                                Amount INT)";
+                                                        ProductName VARCHAR(24) NOT NULL,
+                                                        Description TEXT,
+                                                        Amount INT)";
             command.ExecuteNonQuery();
 
 
