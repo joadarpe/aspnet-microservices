@@ -178,6 +178,10 @@ services:
       - ASPNETCORE_URLS=https://+:443
       - ASPNETCORE_Kestrel__Certificates__Default__Password=joadarpe
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/shopping.webapp.pfx
+      - WaitAndRetry__RetryCount=3
+      - WaitAndRetry__ExponentialBackoffMultiplier=1
+      - CircuitBreaker__EventsBeforeBreaking=6
+      - CircuitBreaker__DurationOfBreak=30
     ports:
       - "8181:443"
     volumes:

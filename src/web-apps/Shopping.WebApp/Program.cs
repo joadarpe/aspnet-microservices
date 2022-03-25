@@ -1,6 +1,5 @@
 using System;
 using System.Security.Claims;
-using Shopping.WebApp.Services;
 using Common.Logging;
 using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -9,6 +8,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
+using Shopping.WebApp.Extensions;
+using Shopping.WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,17 +45,25 @@ builder.Services.AddHttpClient<ICatalogService, CatalogService>(c =>
     c.BaseAddress = new Uri(builder.Configuration.GetConnectionString("GatewayAddress"))
 )
 .AddAuthenticationDelegatingHandler()
-.AddLoggingDelegatingHandler();
+.AddLoggingDelegatingHandler()
+.AddWaitAndRetryAsyncPolicyHandler(builder.Configuration)
+.AddCircuitBreakerAsyncPolicyHandler(builder.Configuration);
+
 builder.Services.AddHttpClient<IBasketService, BasketService>(c =>
     c.BaseAddress = new Uri(builder.Configuration.GetConnectionString("GatewayAddress"))
 )
 .AddAuthenticationDelegatingHandler()
-.AddLoggingDelegatingHandler();
+.AddLoggingDelegatingHandler()
+.AddWaitAndRetryAsyncPolicyHandler(builder.Configuration)
+.AddCircuitBreakerAsyncPolicyHandler(builder.Configuration);
+
 builder.Services.AddHttpClient<IOrderService, OrderService>(c =>
     c.BaseAddress = new Uri(builder.Configuration.GetConnectionString("GatewayAddress"))
 )
 .AddAuthenticationDelegatingHandler()
-.AddLoggingDelegatingHandler();
+.AddLoggingDelegatingHandler()
+.AddWaitAndRetryAsyncPolicyHandler(builder.Configuration)
+.AddCircuitBreakerAsyncPolicyHandler(builder.Configuration);
 
 builder.Services.AddRazorPages();
 
