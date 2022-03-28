@@ -120,8 +120,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:IdentityAuthority=http://identityserver
-      - ConnectionStrings:OrderingConnectionString=Server=ordering.db;Database=OrderDb;User Id=sa;Password=JaaP12345678;
-      - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
+      - ConnectionStrings:OrderingDB=Server=ordering.db;Database=OrderDb;User Id=sa;Password=JaaP12345678;
+      - ConnectionStrings:EventBusAddress=amqp://guest:guest@rabbitmq:5672
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - ordering.db

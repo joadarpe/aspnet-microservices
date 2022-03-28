@@ -9,6 +9,9 @@
     <PackageReference Include="MassTransit.AspNetCore" Version="7.3.1" />
     <PackageReference Include="MassTransit.RabbitMQ" Version="7.3.1" />
     <PackageReference Include="Polly" Version="7.2.3" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.4" />
+    <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="6.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.3" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Controllers\" />
@@ -19,6 +22,9 @@
     <None Remove="EventBusConsumer\" />
     <None Remove="Mappings\" />
     <None Remove="Polly" />
+    <None Remove="AspNetCore.HealthChecks.UI.Client" />
+    <None Remove="AspNetCore.HealthChecks.Rabbitmq" />
+    <None Remove="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />

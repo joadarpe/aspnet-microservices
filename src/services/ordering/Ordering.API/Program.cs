@@ -1,8 +1,10 @@
 ﻿using Common.Logging;
 using EventBus.Messages.Common;
+using HealthChecks.UI.Client;
 using IdentityClient.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,7 +27,7 @@ builder.Services.AddMassTransit(config =>
     config.AddConsumer<BasketCheckoutConsumer>();
     config.UsingRabbitMq((ctx, cfg) =>
     {
-        cfg.Host(builder.Configuration.GetValue<string>("EventBusSettings:HostAddress"));
+        cfg.Host(builder.Configuration.GetConnectionString("EventBusAddress"));
         cfg.ReceiveEndpoint(EventBusConstants.BasketCheckoutQueue, ce =>
         {
             ce.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
@@ -44,6 +46,10 @@ builder.Services.AddSwaggerGen();
 builder.AddApiAuthentication();
 
 builder.Host.UseSerilog();
+
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<OrderContext>()
+    .AddRabbitMQ(rabbitConnectionString: builder.Configuration.GetConnectionString("EventBusAddress"));
 
 var app = builder.Build();
 
@@ -65,5 +71,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();
