@@ -57,10 +57,10 @@ services:
     container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:BasketDB=basket.db:6379
       - ConnectionStrings:IdentityAuthority=http://identityserver
-      - CacheSettings:ConnectionString=basket.db:6379
-      - GrpcSettings:DiscountUrl=http://discount.grpc
-      - EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672
+      - ConnectionStrings:GrpcDiscountUrl=http://discount.grpc
+      - ConnectionStrings:EventBusAddress=amqp://guest:guest@rabbitmq:5672
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - basket.db

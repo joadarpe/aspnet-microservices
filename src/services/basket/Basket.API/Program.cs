@@ -1,15 +1,17 @@
 using System;
 using Basket.API.GrpcServices;
 using Basket.API.Repositories;
+using Common.Logging;
 using Discount.gRPC.Protos;
+using HealthChecks.UI.Client;
+using IdentityClient.Extensions;
+using MassTransit;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Hosting;
-using MassTransit;
-using IdentityClient.Extensions;
-using Common.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,14 +19,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Redis config
 builder.Services.AddStackExchangeRedisCache(options =>
 {
-    options.Configuration = builder.Configuration.GetValue<string>("CacheSettings:ConnectionString");
+    options.Configuration = builder.Configuration.GetConnectionString("BasketDB");
 });
 // Services
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 // Grpc config
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
 {
-    options.Address = new Uri(builder.Configuration.GetValue<string>("GrpcSettings:DiscountUrl"));
+    options.Address = new Uri(builder.Configuration.GetConnectionString("GrpcDiscountUrl"));
 });
 builder.Services.AddScoped<DiscountGrpcService>();
 // RabbitMQ config
@@ -32,7 +34,7 @@ builder.Services.AddMassTransit(config =>
 {
     config.UsingRabbitMq((ctx, cfg) =>
     {
-        cfg.Host(builder.Configuration.GetValue<string>("EventBusSettings:HostAddress"));
+        cfg.Host(builder.Configuration.GetConnectionString("EventBusAddress"));
     });
 });
 builder.Services.AddMassTransitHostedService();
@@ -48,6 +50,10 @@ builder.AddApiAuthentication();
 
 builder.Host.UseSerilog();
 
+builder.Services.AddHealthChecks()
+    .AddRedis(redisConnectionString: builder.Configuration.GetConnectionString("BasketDB"))
+    .AddRabbitMQ(rabbitConnectionString: builder.Configuration.GetConnectionString("EventBusAddress"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,5 +68,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();
