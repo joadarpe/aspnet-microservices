@@ -1,12 +1,15 @@
 using System;
 using System.Security.Claims;
 using Common.Logging;
+using HealthChecks.UI.Client;
 using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using Shopping.WebApp.Extensions;
@@ -69,6 +72,9 @@ builder.Services.AddRazorPages();
 
 builder.Host.UseSerilog();
 
+builder.Services.AddHealthChecks()
+    .AddUrlGroup(new Uri(builder.Configuration.GetConnectionString("GatewayAddress")), "Ocelot.ApiGw", HealthStatus.Degraded);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -94,6 +100,11 @@ app.UseAuthorization();
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapRazorPages();
+    endpoints.MapHealthChecks("/health", new HealthCheckOptions()
+    {
+        Predicate = _ => true,
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 });
 
 app.Run();

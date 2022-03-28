@@ -26,7 +26,12 @@ builder.Host.UseSerilog();
 
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("/", () => "Hello World!");
+});
 
 await app.UseOcelot();
 

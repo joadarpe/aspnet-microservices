@@ -17,6 +17,8 @@
     <None Remove="Microsoft.AspNetCore.Authentication.OpenIdConnect" />
     <None Remove="IdentityModel" />
     <None Remove="Microsoft.Extensions.Http.Polly" />
+    <None Remove="AspNetCore.HealthChecks.Uris" />
+    <None Remove="AspNetCore.HealthChecks.UI.Client" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -26,6 +28,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.3" />
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.3" />
+    <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="6.0.3" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\auth\IdentityClient.Extensions\IdentityClient.Extensions.csproj">
