@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.4" />
+    <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="6.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,6 +16,8 @@
     <None Remove="Controllers\" />
     <None Remove="Services\" />
     <None Remove="Extensions\" />
+    <None Remove="AspNetCore.HealthChecks.UI.Client" />
+    <None Remove="AspNetCore.HealthChecks.Uris" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
