@@ -86,8 +86,8 @@ services:
     container_name: discount.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:DiscountDB=Server=discount.db;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;
       - ConnectionStrings:IdentityAuthority=http://identityserver
-      - DatabaseSettings:ConnectionString=Server=discount.db;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - discount.db
@@ -98,7 +98,7 @@ services:
     container_name: discount.grpc
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - DatabaseSettings:ConnectionString=Server=discount.db;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;
+      - ConnectionStrings:DiscountDB=Server=discount.db;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - discount.db

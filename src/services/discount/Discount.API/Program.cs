@@ -1,8 +1,11 @@
 using Common.Logging;
 using Discount.API.Extensions;
 using Discount.API.Repositories;
+using HealthChecks.UI.Client;
 using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -19,6 +22,9 @@ builder.AddApiAuthentication();
 
 builder.Host.UseSerilog();
 
+builder.Services.AddHealthChecks()
+    .AddNpgSql(npgsqlConnectionString: builder.Configuration.GetConnectionString("DiscountDB"));
+
 var app = builder.Build();
 app.MigrateDatabase<Program>();
 
@@ -34,5 +40,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();

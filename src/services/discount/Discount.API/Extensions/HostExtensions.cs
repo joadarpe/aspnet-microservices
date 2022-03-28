@@ -53,7 +53,7 @@ namespace Discount.API.Extensions
 
         private static void ExecuteMigrations(IConfiguration configuration)
         {
-            using var connection = new NpgsqlConnection(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
+            using var connection = new NpgsqlConnection(configuration.GetConnectionString("DiscountDB"));
             connection.Open();
 
             using var command = new NpgsqlCommand
