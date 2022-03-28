@@ -1,8 +1,11 @@
 using Catalog.API.Data;
 using Catalog.API.Repositories;
 using Common.Logging;
+using HealthChecks.UI.Client;
 using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -22,6 +25,9 @@ builder.AddApiAuthentication();
 
 builder.Host.UseSerilog();
 
+builder.Services.AddHealthChecks()
+    .AddMongoDb(mongodbConnectionString: builder.Configuration.GetConnectionString("CatalogDB"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -36,5 +42,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.Run();

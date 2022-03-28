@@ -36,8 +36,8 @@ services:
     container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings:CatalogDB=mongodb://catalog.db:27017
       - ConnectionStrings:IdentityAuthority=http://identityserver
-      - DatabaseSettings:ConnectionString=mongodb://catalog.db:27017
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
     depends_on:
       - catalog.db
