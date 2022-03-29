@@ -69,7 +69,7 @@ services:
       context: .
       dockerfile: api-gateways/Shopping.Aggregator/Dockerfile
 
-  # Shopping.webapp
+  # Shopping.WebApp
   shopping.webapp:
     image: ${DOCKER_REGISTRY-}shopping.webapp
     build:
@@ -89,6 +89,13 @@ services:
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.9.2
+
+  # Status.WebApp
+  status.webapp:
+    image: ${DOCKER_REGISTRY-}status
+    build:
+      context: .
+      dockerfile: web-apps/Status.WebApp/Dockerfile
 
 volumes:
   portainer_data:
