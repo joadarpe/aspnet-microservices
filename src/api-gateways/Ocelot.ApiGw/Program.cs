@@ -1,4 +1,5 @@
 ﻿using Common.Logging;
+using Common.Tracing;
 using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,8 @@ builder.Services.AddOcelot().AddCacheManager(cb =>
 });
 
 builder.Host.UseSerilog();
+
+builder.AddZipkinTelemetryTracing();
 
 var app = builder.Build();
 

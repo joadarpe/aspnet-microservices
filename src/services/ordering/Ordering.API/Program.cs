@@ -1,4 +1,5 @@
 ﻿using Common.Logging;
+using Common.Tracing;
 using EventBus.Messages.Common;
 using HealthChecks.UI.Client;
 using IdentityClient.Extensions;
@@ -50,6 +51,8 @@ builder.Host.UseSerilog();
 builder.Services.AddHealthChecks()
     .AddDbContextCheck<OrderContext>()
     .AddRabbitMQ(rabbitConnectionString: builder.Configuration.GetConnectionString("EventBusAddress"));
+
+builder.AddZipkinTelemetryTracing();
 
 var app = builder.Build();
 

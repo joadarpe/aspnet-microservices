@@ -39,6 +39,7 @@ services:
       - ConnectionStrings:CatalogDB=mongodb://catalog.db:27017
       - ConnectionStrings:IdentityAuthority=http://identityserver
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
+      - ConnectionStrings:ZipkinUri=http://zipkinserver:9411
     depends_on:
       - catalog.db
     ports:
@@ -62,6 +63,7 @@ services:
       - ConnectionStrings:GrpcDiscountUrl=http://discount.grpc
       - ConnectionStrings:EventBusAddress=amqp://guest:guest@rabbitmq:5672
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
+      - ConnectionStrings:ZipkinUri=http://zipkinserver:9411
     depends_on:
       - basket.db
       - discount.grpc
@@ -89,6 +91,7 @@ services:
       - ConnectionStrings:DiscountDB=Server=discount.db;Port=5432;Database=DiscountDb;User Id=admin;Password=admin1234;
       - ConnectionStrings:IdentityAuthority=http://identityserver
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
+      - ConnectionStrings:ZipkinUri=http://zipkinserver:9411
     depends_on:
       - discount.db
     ports:
@@ -123,6 +126,7 @@ services:
       - ConnectionStrings:OrderingDB=Server=ordering.db;Database=OrderDb;User Id=sa;Password=JaaP12345678;
       - ConnectionStrings:EventBusAddress=amqp://guest:guest@rabbitmq:5672
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
+      - ConnectionStrings:ZipkinUri=http://zipkinserver:9411
     depends_on:
       - ordering.db
       - rabbitmq
@@ -136,6 +140,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings:IdentityAuthority=http://identityserver
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
+      - ConnectionStrings:ZipkinUri=http://zipkinserver:9411
     depends_on:
       - catalog.api
       - basket.api
@@ -153,6 +158,7 @@ services:
       - ApiSettings:BasketUrl=http://basket.api
       - ApiSettings:OrderingUrl=http://ordering.api
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
+      - ConnectionStrings:ZipkinUri=http://zipkinserver:9411
     depends_on:
       - catalog.api
       - basket.api
@@ -243,3 +249,15 @@ services:
       - HealthChecksUI__HealthChecks__5__Uri=https://shopping.webapp:8181/health
     ports:
       - "8282:80"
+
+  # ZipkinServer 
+  zipkinserver:
+    container_name: zipkinserver
+    mem_reservation: 300m
+    restart: always
+    depends_on:
+      - rabbitmq
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    ports:
+      - "9411:9411"

@@ -1,6 +1,7 @@
 using Catalog.API.Data;
 using Catalog.API.Repositories;
 using Common.Logging;
+using Common.Tracing;
 using HealthChecks.UI.Client;
 using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +28,8 @@ builder.Host.UseSerilog();
 
 builder.Services.AddHealthChecks()
     .AddMongoDb(mongodbConnectionString: builder.Configuration.GetConnectionString("CatalogDB"));
+
+builder.AddZipkinTelemetryTracing();
 
 var app = builder.Build();
 

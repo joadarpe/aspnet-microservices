@@ -9,16 +9,22 @@
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
     <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.1" />
+    <PackageReference Include="OpenTelemetry.Exporter.Zipkin" Version="1.1.0" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.0.0-rc9.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.0.0-rc9.1" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.0.0-rc9.1" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Logging\" />
     <None Remove="HttpClient\" />
     <None Remove="Resilience\" />
+    <None Remove="Tracing\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logging\" />
     <Folder Include="Http\" />
     <Folder Include="Resilience\" />
+    <Folder Include="Tracing\" />
   </ItemGroup>
 </Project>

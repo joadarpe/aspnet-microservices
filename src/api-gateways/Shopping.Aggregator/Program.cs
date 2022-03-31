@@ -1,5 +1,6 @@
 ﻿using System;
 using Common.Logging;
+using Common.Tracing;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -30,6 +31,8 @@ builder.Services.AddHealthChecks()
     .AddUrlGroup(new Uri($"{builder.Configuration.GetValue<string>("ApiSettings:CatalogUrl")}/swagger/index.html"), "Catalog.API", HealthStatus.Degraded)
     .AddUrlGroup(new Uri($"{builder.Configuration.GetValue<string>("ApiSettings:BasketUrl")}/swagger/index.html"), "Basket.API", HealthStatus.Degraded)
     .AddUrlGroup(new Uri($"{builder.Configuration.GetValue<string>("ApiSettings:OrderingUrl")}/swagger/index.html"), "Ordering.API", HealthStatus.Degraded);
+
+builder.AddZipkinTelemetryTracing();
 
 var app = builder.Build();
 

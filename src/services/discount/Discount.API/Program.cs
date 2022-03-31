@@ -1,4 +1,5 @@
 using Common.Logging;
+using Common.Tracing;
 using Discount.API.Extensions;
 using Discount.API.Repositories;
 using HealthChecks.UI.Client;
@@ -24,6 +25,8 @@ builder.Host.UseSerilog();
 
 builder.Services.AddHealthChecks()
     .AddNpgSql(npgsqlConnectionString: builder.Configuration.GetConnectionString("DiscountDB"));
+
+builder.AddZipkinTelemetryTracing();
 
 var app = builder.Build();
 app.MigrateDatabase<Program>();

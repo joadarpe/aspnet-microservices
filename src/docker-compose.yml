@@ -97,6 +97,10 @@ services:
       context: .
       dockerfile: web-apps/Status.WebApp/Dockerfile
 
+  # ZipkinServer 
+  zipkinserver:
+    image: openzipkin/zipkin:2.23
+
 volumes:
   portainer_data:
   mongo_data:

@@ -2,6 +2,7 @@ using System;
 using Basket.API.GrpcServices;
 using Basket.API.Repositories;
 using Common.Logging;
+using Common.Tracing;
 using Discount.gRPC.Protos;
 using HealthChecks.UI.Client;
 using IdentityClient.Extensions;
@@ -53,6 +54,8 @@ builder.Host.UseSerilog();
 builder.Services.AddHealthChecks()
     .AddRedis(redisConnectionString: builder.Configuration.GetConnectionString("BasketDB"))
     .AddRabbitMQ(rabbitConnectionString: builder.Configuration.GetConnectionString("EventBusAddress"));
+
+builder.AddZipkinTelemetryTracing();
 
 var app = builder.Build();
 
