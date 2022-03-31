@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Shopping.WebApp.Extensions;
+using Common.Http;
 using Shopping.WebApp.Models;
 
 namespace Shopping.WebApp.Services

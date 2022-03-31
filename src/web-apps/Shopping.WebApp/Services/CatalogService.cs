@@ -2,26 +2,22 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Shopping.WebApp.Extensions;
+using Common.Http;
 using Shopping.WebApp.Models;
-using Microsoft.Extensions.Logging;
 
 namespace Shopping.WebApp.Services
 {
     public class CatalogService : ICatalogService
     {
         private readonly HttpClient _client;
-        private readonly ILogger<CatalogService> _logger;
 
-        public CatalogService(HttpClient client, ILogger<CatalogService> logger)
+        public CatalogService(HttpClient client)
         {
             _client = client ?? throw new ArgumentNullException(nameof(client));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<IEnumerable<CatalogModel>> GetCatalog()
         {
-            _logger.LogDebug("Getting products from Catalog Api at {url}", _client.BaseAddress);
             var response = await _client.GetAsync("/Catalog");
             return await response.ReadContentAs<List<CatalogModel>>();
         }

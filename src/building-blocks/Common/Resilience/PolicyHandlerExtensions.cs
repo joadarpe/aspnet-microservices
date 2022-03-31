@@ -5,7 +5,7 @@ using Polly;
 using Polly.Extensions.Http;
 using Serilog;
 
-namespace Shopping.WebApp.Extensions
+namespace Common.Resilience
 {
     public static class PolicyHandlerExtensions
     {

@@ -9,7 +9,7 @@ WORKDIR /src
 COPY ["services/basket/Basket.API/Basket.API.csproj", "services/basket/Basket.API/"]
 COPY ["building-blocks/EventBus.Messages/EventBus.Messages.csproj", "building-blocks/EventBus.Messages/"]
 COPY ["auth/IdentityClient.Extensions/IdentityClient.Extensions.csproj", "auth/IdentityClient.Extensions/"]
-COPY ["building-blocks/Common.Logging/Common.Logging.csproj", "building-blocks/Common.Logging/"]
+COPY ["building-blocks/Common/Common.csproj", "building-blocks/Common/"]
 RUN dotnet restore "services/basket/Basket.API/Basket.API.csproj"
 COPY . .
 WORKDIR "/src/services/basket/Basket.API"

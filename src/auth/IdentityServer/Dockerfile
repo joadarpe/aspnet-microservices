@@ -8,7 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["auth/IdentityServer/IdentityServer.csproj", "auth/IdentityServer/"]
-COPY ["building-blocks/Common.Logging/Common.Logging.csproj", "building-blocks/Common.Logging/"]
+COPY ["building-blocks/Common/Common.csproj", "building-blocks/Common/"]
 RUN dotnet restore "auth/IdentityServer/IdentityServer.csproj"
 COPY . .
 WORKDIR "/src/auth/IdentityServer"

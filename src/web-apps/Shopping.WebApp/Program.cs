@@ -1,6 +1,7 @@
 using System;
 using System.Security.Claims;
 using Common.Logging;
+using Common.Resilience;
 using HealthChecks.UI.Client;
 using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -12,7 +13,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Serilog;
-using Shopping.WebApp.Extensions;
 using Shopping.WebApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);

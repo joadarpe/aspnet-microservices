@@ -4,7 +4,7 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Shopping.WebApp.Extensions
+namespace Common.Http
 {
     public static class HttpClientExtensions
     {

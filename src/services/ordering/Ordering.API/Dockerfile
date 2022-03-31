@@ -12,7 +12,7 @@ COPY ["services/ordering/Ordering.Application/Ordering.Application.csproj", "ser
 COPY ["services/ordering/Ordering.Domain/Ordering.Domain.csproj", "services/ordering/Ordering.Domain/"]
 COPY ["building-blocks/EventBus.Messages/EventBus.Messages.csproj", "building-blocks/EventBus.Messages/"]
 COPY ["auth/IdentityClient.Extensions/IdentityClient.Extensions.csproj", "auth/IdentityClient.Extensions/"]
-COPY ["building-blocks/Common.Logging/Common.Logging.csproj", "building-blocks/Common.Logging/"]
+COPY ["building-blocks/Common/Common.csproj", "building-blocks/Common/"]
 RUN dotnet restore "services/ordering/Ordering.API/Ordering.API.csproj"
 COPY . .
 WORKDIR "/src/services/ordering/Ordering.API"

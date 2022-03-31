@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Shopping.Aggregator.Extensions;
+using Common.Http;
 using Shopping.Aggregator.Models;
 
 namespace Shopping.Aggregator.Services

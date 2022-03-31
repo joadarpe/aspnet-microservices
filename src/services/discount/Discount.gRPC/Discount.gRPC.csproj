@@ -37,7 +37,7 @@
     </Protobuf>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\building-blocks\Common.Logging\Common.Logging.csproj">
+    <ProjectReference Include="..\..\..\building-blocks\Common\Common.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
