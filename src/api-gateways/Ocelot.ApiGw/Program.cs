@@ -1,6 +1,6 @@
-﻿using Common.Logging;
+﻿using Common.Auth;
+using Common.Logging;
 using Common.Tracing;
-using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;

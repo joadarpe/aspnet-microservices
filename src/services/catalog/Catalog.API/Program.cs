@@ -1,9 +1,9 @@
 using Catalog.API.Data;
 using Catalog.API.Repositories;
+using Common.Auth;
 using Common.Logging;
 using Common.Tracing;
 using HealthChecks.UI.Client;
-using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;

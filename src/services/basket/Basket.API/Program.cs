@@ -1,11 +1,11 @@
 using System;
 using Basket.API.GrpcServices;
 using Basket.API.Repositories;
+using Common.Auth;
 using Common.Logging;
 using Common.Tracing;
 using Discount.gRPC.Protos;
 using HealthChecks.UI.Client;
-using IdentityClient.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;

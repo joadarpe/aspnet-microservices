@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.3" />
     <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="6.0.3" />
+    <PackageReference Include="IdentityModel" Version="6.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
     <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="8.4.1" />
@@ -20,11 +22,13 @@
     <None Remove="HttpClient\" />
     <None Remove="Resilience\" />
     <None Remove="Tracing\" />
+    <None Remove="Auth\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Logging\" />
     <Folder Include="Http\" />
     <Folder Include="Resilience\" />
     <Folder Include="Tracing\" />
+    <Folder Include="Auth\" />
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 
-namespace IdentityClient.Extensions
+namespace Common.Auth
 {
     public class AuthenticationDelegatingHandler : DelegatingHandler
 	{

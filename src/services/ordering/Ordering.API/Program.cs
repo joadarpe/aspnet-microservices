@@ -1,8 +1,8 @@
-﻿using Common.Logging;
+﻿using Common.Auth;
+using Common.Logging;
 using Common.Tracing;
 using EventBus.Messages.Common;
 using HealthChecks.UI.Client;
-using IdentityClient.Extensions;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;

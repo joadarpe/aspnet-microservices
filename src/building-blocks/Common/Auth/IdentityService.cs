@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 
-namespace IdentityClient.Extensions
+namespace Common.Auth
 {
     public interface IIdentityService
     {

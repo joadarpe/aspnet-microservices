@@ -43,9 +43,6 @@
     <ProjectReference Include="..\..\..\building-blocks\EventBus.Messages\EventBus.Messages.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\auth\IdentityClient.Extensions\IdentityClient.Extensions.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\building-blocks\Common\Common.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>

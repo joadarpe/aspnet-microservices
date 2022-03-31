@@ -7,7 +7,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["web-apps/Shopping.WebApp/Shopping.WebApp.csproj", "web-apps/Shopping.WebApp/"]
-COPY ["auth/IdentityClient.Extensions/IdentityClient.Extensions.csproj", "auth/IdentityClient.Extensions/"]
 COPY ["building-blocks/Common/Common.csproj", "building-blocks/Common/"]
 RUN dotnet restore "web-apps/Shopping.WebApp/Shopping.WebApp.csproj"
 COPY . .

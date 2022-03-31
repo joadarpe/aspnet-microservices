@@ -1,4 +1,5 @@
 ﻿using System;
+using Common.Auth;
 using Common.Logging;
 using Common.Tracing;
 using HealthChecks.UI.Client;
@@ -12,13 +13,20 @@ using Shopping.Aggregator.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddApiClientAuthentication();
 // Add services to the container.
 builder.Services.AddHttpClient<ICatalogService, CatalogService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ApiSettings:CatalogUrl")));
+    c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ApiSettings:CatalogUrl"))
+)
+.AddAuthenticationDelegatingHandler();
 builder.Services.AddHttpClient<IBasketService, BasketService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ApiSettings:BasketUrl")));
+    c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ApiSettings:BasketUrl"))
+)
+.AddAuthenticationDelegatingHandler();
 builder.Services.AddHttpClient<IOrderService, OrderService>(c =>
-    c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ApiSettings:OrderingUrl")));
+    c.BaseAddress = new Uri(builder.Configuration.GetValue<string>("ApiSettings:OrderingUrl"))
+)
+.AddAuthenticationDelegatingHandler();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

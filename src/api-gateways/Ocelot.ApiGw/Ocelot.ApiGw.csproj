@@ -14,9 +14,6 @@
     <PackageReference Include="Ocelot.Cache.CacheManager" Version="18.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\auth\IdentityClient.Extensions\IdentityClient.Extensions.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
     <ProjectReference Include="..\..\building-blocks\Common\Common.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>

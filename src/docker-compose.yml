@@ -92,7 +92,7 @@ services:
 
   # Status.WebApp
   status.webapp:
-    image: ${DOCKER_REGISTRY-}status
+    image: ${DOCKER_REGISTRY-}status.webapp
     build:
       context: .
       dockerfile: web-apps/Status.WebApp/Dockerfile

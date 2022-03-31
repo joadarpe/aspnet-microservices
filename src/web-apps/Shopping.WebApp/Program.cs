@@ -1,9 +1,9 @@
 using System;
 using System.Security.Claims;
+using Common.Auth;
 using Common.Logging;
 using Common.Resilience;
 using HealthChecks.UI.Client;
-using IdentityClient.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;

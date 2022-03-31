@@ -157,6 +157,7 @@ services:
       - ApiSettings:CatalogUrl=http://catalog.api
       - ApiSettings:BasketUrl=http://basket.api
       - ApiSettings:OrderingUrl=http://ordering.api
+      - ConnectionStrings:IdentityAuthority=http://identityserver
       - ConnectionStrings:ElasticSearchUri=http://elasticsearch:9200
       - ConnectionStrings:ZipkinUri=http://zipkinserver:9411
     depends_on:

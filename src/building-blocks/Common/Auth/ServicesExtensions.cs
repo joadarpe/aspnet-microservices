@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 
-namespace IdentityClient.Extensions
+namespace Common.Auth
 {
     public static class ServicesExtensions
 	{
