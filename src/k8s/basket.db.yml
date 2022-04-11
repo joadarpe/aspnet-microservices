@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: basketdb-configmap
+data:
+  connection_string: basketdb-service:6379
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basketdb-deployment
+  labels:
+    app: basket.db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: basket.db
+  template:
+    metadata:
+      labels:
+        app: basket.db
+    spec:
+      containers:
+        - name: basket-db
+          image: redis:alpine
+          ports:
+            - containerPort: 27017
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "50m"
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: basketdb-service
+spec:
+  selector:
+    app: basket.db
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379

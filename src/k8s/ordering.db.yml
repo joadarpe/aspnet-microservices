@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: orderingdb-secret
+type: Opaque
+data:
+  mssql-root-username: b3JkZXJpbmcuZGIucGFzc3dvcmQ=
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: orderingdb-configmap
+data:
+  connection_string: Server=ordering.db;Database=OrderDb;User Id=sa;Password=ordering.db.password;
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderingdb-deployment
+  labels:
+    app: ordering.db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ordering.db
+  template:
+    metadata:
+      labels:
+        app: ordering.db
+    spec:
+      containers:
+        - name: ordering-db
+          image: mcr.microsoft.com/mssql/server:2017-latest
+          ports:
+            - containerPort: 1433
+          env:
+            - name: SA_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: orderingdb-secret
+                  key: mssql-root-username
+            - name: ACCEPT_EULA
+              value: "Y"
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orderingdb-service
+spec:
+  selector:
+    app: ordering.db
+  ports:
+    - protocol: TCP
+      port: 1433
+      targetPort: 1433

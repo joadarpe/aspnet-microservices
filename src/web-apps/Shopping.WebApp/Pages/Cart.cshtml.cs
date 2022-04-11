@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Shopping.WebApp
 {
-    [Authorize]
+    //[Authorize]
     public class CartModel : PageModel
     {
         private readonly ICatalogService _catalogService;
@@ -31,7 +31,7 @@ namespace Shopping.WebApp
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var userName = User.Identity.Name;
+            var userName = User?.Identity?.Name ?? "JonathanA";
             Cart = await _basketService.GetBasket(userName);
 
             return Page();
@@ -41,7 +41,7 @@ namespace Shopping.WebApp
         {
             var product = await _catalogService.GetCatalog(productId);
 
-            var userName = User.Identity.Name;
+            var userName = User?.Identity?.Name ?? "JonathanA";
             var basket = await _basketService.GetBasket(userName);
 
             var item = basket.Items.SingleOrDefault(x => x.ProductId == productId && x.Color == "Black");
@@ -68,7 +68,7 @@ namespace Shopping.WebApp
 
         public async Task<IActionResult> OnPostUpdateToCartAsync(int newQuantity, string productId)
         {
-            var userName = User.Identity.Name;
+            var userName = User?.Identity?.Name ?? "JonathanA";
             var basket = await _basketService.GetBasket(userName);
 
             var item = basket.Items.SingleOrDefault(x => x.ProductId == productId);
@@ -84,7 +84,7 @@ namespace Shopping.WebApp
 
         public async Task<IActionResult> OnPostRemoveToCartAsync(string productId)
         {
-            var userName = User.Identity.Name;
+            var userName = User?.Identity?.Name ?? "JonathanA";
             var basket = await _basketService.GetBasket(userName);
 
             var item = basket.Items.Single(x => x.ProductId == productId);
